@@ -1,21 +1,18 @@
-# Adjust COM port and baud rate as necessary
-$portName = "COM8" # Change this to your actual COM port
-$baudRate = 115200
+# Definisikan COM port dan baud rate
+$portName = "COM8" # Ubah Ke COM port Sebenarnya
+$baudRate = 115200 # Ubah Ke Baud Rate Sebenarnya
 
-# Create a SerialPort object
+# Buat Objek Serial Port
 $serialPort = New-Object System.IO.Ports.SerialPort $portName, $baudRate
 
 try {
-    # Open the serial port
     $serialPort.Open()
 
     while ($true) {
         if ($serialPort.BytesToRead -gt 0) { # Check if there are bytes to read
             $inputLine = $serialPort.ReadLine().Trim() # Read a line and trim whitespace
             if ($inputLine -eq "SHUTDOWN") {
-                # Show shutdown warning
-                Start-Sleep -Seconds 3
-                # Implement your shutdown logic here
+                # Perintah Shutdown
                 Stop-Computer -Force
             } else {
                 Write-Host "Power is good." # Informative message when input is not "SHUTDOWN"
